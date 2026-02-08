@@ -11,7 +11,7 @@
     pkgs.tesseract
     pkgs.poppler_utils
 
-    # Build tools (safe defaults)
+    # Build tools
     pkgs.git
     pkgs.curl
   ];
@@ -31,10 +31,23 @@
 
     previews = {
       enable = true;
+      previews = {
+        api = {
+          command = [
+            "bash"
+            "-c"
+            "uvicorn app:app --host 0.0.0.0 --port $PORT"
+          ];
+          manager = "web";
+          env = {
+            PORT = "$PORT";
+          };
+        };
+      };
     };
 
     workspace = {
-      # Run once when workspace is created
+      # Runs once when workspace is created
       onCreate = {
         install-deps = ''
           pip install --upgrade pip
@@ -42,11 +55,11 @@
         '';
       };
 
-      # Run every time workspace starts
+      # Runs every time workspace starts
       onStart = {
         start-backend = ''
-          echo "Workspace ready. Start backend with:"
-          echo "uvicorn app:app --reload"
+          echo "Workspace ready."
+          echo "FastAPI is available in the preview panel."
         '';
       };
     };
