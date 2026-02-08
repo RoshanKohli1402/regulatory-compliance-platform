@@ -1,0 +1,88 @@
+{
+  "id": "soc2",
+  "name": "SOC 2 Type II",
+  "jurisdiction": "Global",
+  "region": "Global",
+  "regulatory_body": "AICPA",
+  "language": "en",
+  "description": "Service organization control for security, availability, processing integrity, confidentiality, and privacy",
+  
+  "document_patterns": [
+    "soc 2",
+    "trust services criteria",
+    "aicpa",
+    "service organization control",
+    "type ii"
+  ],
+  
+  "obligation_keywords": [
+    "must",
+    "shall",
+    "is required to",
+    "are required to",
+    "will be required to",
+    "shall not",
+    "may not",
+    "should",
+    "is expected to"
+  ],
+  
+  "business_unit_rules": {
+    "Information Security": [
+      "security",
+      "access control",
+      "authentication",
+      "authorization",
+      "firewall",
+      "encryption",
+      "vulnerability"
+    ],
+    "Availability": [
+      "availability",
+      "uptime",
+      "disaster recovery",
+      "business continuity",
+      "backup",
+      "redundancy"
+    ],
+    "Processing Integrity": [
+      "data quality",
+      "accuracy",
+      "completeness",
+      "validity",
+      "processing integrity"
+    ],
+    "Confidentiality": [
+      "confidential",
+      "sensitive data",
+      "non-disclosure",
+      "data classification"
+    ],
+    "Privacy": [
+      "privacy",
+      "personal information",
+      "pii",
+      "consent",
+      "data subject rights"
+    ],
+    "Monitoring & Logging": [
+      "monitoring",
+      "logging",
+      "audit trail",
+      "incident detection",
+      "alerting"
+    ]
+  },
+  
+  "risk_scores": {
+    "Information Security": 3,
+    "Availability": 3,
+    "Processing Integrity": 2,
+    "Confidentiality": 3,
+    "Privacy": 3,
+    "Monitoring & Logging": 2,
+    "Unclassified": 1
+  },
+  
+  "ml_threshold": 0.75
+}

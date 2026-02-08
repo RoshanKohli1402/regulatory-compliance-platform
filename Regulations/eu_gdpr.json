@@ -1,0 +1,84 @@
+{
+  "id": "eu_gdpr",
+  "name": "EU General Data Protection Regulation",
+  "jurisdiction": "European Union",
+  "region": "Europe",
+  "regulatory_body": "European Data Protection Board",
+  "language": "en",
+  "description": "Data protection and privacy regulation",
+  
+  "document_patterns": [
+    "gdpr",
+    "general data protection regulation",
+    "data protection",
+    "personal data",
+    "data controller",
+    "data processor"
+  ],
+  
+  "obligation_keywords": [
+    "must",
+    "shall",
+    "is required to",
+    "are required to",
+    "will be required to",
+    "shall not",
+    "may not",
+    "is obliged to",
+    "are obliged to",
+    "have the obligation to"
+  ],
+  
+  "business_unit_rules": {
+    "Data Privacy / Protection": [
+      "personal data",
+      "data subject",
+      "processing",
+      "consent",
+      "data protection",
+      "privacy",
+      "controller",
+      "processor"
+    ],
+    "Legal / Compliance": [
+      "legal basis",
+      "lawful processing",
+      "compliance",
+      "supervisory authority",
+      "data protection officer",
+      "dpo"
+    ],
+    "Technology / IT": [
+      "security measures",
+      "technical measures",
+      "encryption",
+      "pseudonymisation",
+      "data breach",
+      "cybersecurity"
+    ],
+    "Risk Management": [
+      "data protection impact assessment",
+      "dpia",
+      "risk",
+      "data breach",
+      "incident response"
+    ],
+    "HR / Operations": [
+      "employee data",
+      "personnel",
+      "employment",
+      "staff"
+    ]
+  },
+  
+  "risk_scores": {
+    "Data Privacy / Protection": 3,
+    "Legal / Compliance": 3,
+    "Technology / IT": 2,
+    "Risk Management": 3,
+    "HR / Operations": 1,
+    "Unclassified": 1
+  },
+  
+  "ml_threshold": 0.8
+}

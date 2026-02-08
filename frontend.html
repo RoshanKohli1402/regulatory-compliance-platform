@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Regulatory Compliance Auditor</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #131837;
+            --bg-card: #1a1f3a;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-amber: #f59e0b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #1e293b;
+            --glow-blue: rgba(59, 130, 246, 0.3);
+            --glow-cyan: rgba(6, 182, 212, 0.3);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #root {
+            min-height: 100vh;
+        }
+
+        /* Animated background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, var(--glow-blue) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, var(--glow-cyan) 0%, transparent 50%),
+                var(--bg-primary);
+            z-index: -1;
+            animation: bgShift 20s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        .header {
+            padding: 2.5rem 3rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(19, 24, 55, 0.8);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            box-shadow: 0 4px 20px var(--glow-blue);
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-left: 64px;
+            font-weight: 400;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem;
+        }
+
+        /* Upload section */
+        .upload-section {
+            background: var(--bg-card);
+            border: 2px dashed var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-section:hover {
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .upload-section.dragging {
+            border-color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+
+        .upload-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .upload-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: white;
+            box-shadow: 0 4px 20px var(--glow-blue);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--glow-blue);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-blue);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Regulation selector */
+        .regulation-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .regulation-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .regulation-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .regulation-card.selected {
+            border-color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .regulation-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--accent-cyan);
+        }
+
+        .regulation-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .regulation-card p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        /* Stats cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .stat-card.high::before {
+            background: var(--accent-red);
+            box-shadow: 0 0 20px var(--accent-red);
+        }
+
+        .stat-card.medium::before {
+            background: var(--accent-amber);
+            box-shadow: 0 0 20px var(--accent-amber);
+        }
+
+        .stat-card.total::before {
+            background: var(--accent-blue);
+            box-shadow: 0 0 20px var(--accent-blue);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Results section */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+        }
+
+        .filter-btn.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        /* Findings list */
+        .findings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .finding-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .finding-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+        }
+
+        .finding-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .finding-meta {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge.high {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+        }
+
+        .badge.medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-amber);
+            border: 1px solid var(--accent-amber);
+        }
+
+        .badge.unit {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--accent-purple);
+        }
+
+        .badge.page {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--accent-cyan);
+        }
+
+        .finding-content {
+            color: var(--text-primary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .finding-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .risk-score {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .risk-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .risk-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+        }
+
+        .risk-dot.filled {
+            background: var(--accent-red);
+            box-shadow: 0 0 8px var(--accent-red);
+        }
+
+        .confidence {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Loading state */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border);
+            border-top-color: var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.4;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .header {
+                padding: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const API_URL = 'http://localhost:8000';
+
+        function App() {
+            const [regulations, setRegulations] = useState([]);
+            const [selectedRegulation, setSelectedRegulation] = useState('auto');
+            const [file, setFile] = useState(null);
+            const [loading, setLoading] = useState(false);
+            const [results, setResults] = useState(null);
+            const [filter, setFilter] = useState('all');
+            const [dragging, setDragging] = useState(false);
+
+            useEffect(() => {
+                fetchRegulations();
+            }, []);
+
+            const fetchRegulations = async () => {
+                try {
+                    const response = await fetch(`${API_URL}/regulations`);
+                    const data = await response.json();
+                    setRegulations(data);
+                } catch (error) {
+                    console.error('Error fetching regulations:', error);
+                }
+            };
+
+            const handleFileChange = (e) => {
+                const selectedFile = e.target.files[0];
+                if (selectedFile && selectedFile.type === 'application/pdf') {
+                    setFile(selectedFile);
+                } else {
+                    alert('Please select a PDF file');
+                }
+            };
+
+            const handleDragOver = (e) => {
+                e.preventDefault();
+                setDragging(true);
+            };
+
+            const handleDragLeave = () => {
+                setDragging(false);
+            };
+
+            const handleDrop = (e) => {
+                e.preventDefault();
+                setDragging(false);
+                
+                const droppedFile = e.dataTransfer.files[0];
+                if (droppedFile && droppedFile.type === 'application/pdf') {
+                    setFile(droppedFile);
+                } else {
+                    alert('Please drop a PDF file');
+                }
+            };
+
+            const handleAnalyze = async () => {
+                if (!file) {
+                    alert('Please select a file first');
+                    return;
+                }
+
+                setLoading(true);
+                setResults(null);
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    const url = selectedRegulation === 'auto' 
+                        ? `${API_URL}/analyze`
+                        : `${API_URL}/analyze?regulation_id=${selectedRegulation}`;
+
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        setResults(data);
+                    } else {
+                        alert('Analysis failed. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error connecting to server');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const filteredResults = results?.results.filter(r => {
+                if (filter === 'all') return true;
+                return r.priority.toLowerCase() === filter;
+            }) || [];
+
+            return (
+                <div>
+                    <header className="header">
+                        <div className="header-content">
+                            <div className="logo">
+                                <div className="logo-icon">⚖</div>
+                                <h1>Global Regulatory Auditor</h1>
+                            </div>
+                            <p className="tagline">
+                                AI-powered multi-jurisdiction compliance analysis
+                            </p>
+                        </div>
+                    </header>
+
+                    <div className="container">
+                        {/* Upload Section */}
+                        <div 
+                            className={`upload-section ${dragging ? 'dragging' : ''}`}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                        >
+                            <div className="upload-icon">📄</div>
+                            <h2>Upload Regulatory Document</h2>
+                            <p>
+                                {file ? `Selected: ${file.name}` : 'Drag & drop your PDF or click to browse'}
+                            </p>
+                            <div className="file-input-wrapper">
+                                <input
+                                    type="file"
+                                    className="file-input"
+                                    id="fileInput"
+                                    accept=".pdf"
+                                    onChange={handleFileChange}
+                                />
+                                <label htmlFor="fileInput" className="btn btn-primary">
+                                    📁 Select PDF File
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* Regulation Selector */}
+                        <h3 style={{ marginBottom: '1rem', fontSize: '1.25rem' }}>
+                            Select Regulation Framework
+                        </h3>
+                        <div className="regulation-selector">
+                            <div
+                                className={`regulation-card ${selectedRegulation === 'auto' ? 'selected' : ''}`}
+                                onClick={() => setSelectedRegulation('auto')}
+                            >
+                                <span className="regulation-badge">AUTO-DETECT</span>
+                                <h3>🤖 Auto Detection</h3>
+                                <p>Automatically detect the regulation type from document content</p>
+                            </div>
+                            {regulations.map(reg => (
+                                <div
+                                    key={reg.id}
+                                    className={`regulation-card ${selectedRegulation === reg.id ? 'selected' : ''}`}
+                                    onClick={() => setSelectedRegulation(reg.id)}
+                                >
+                                    <span className="regulation-badge">{reg.region}</span>
+                                    <h3>{reg.name}</h3>
+                                    <p>{reg.description}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Analyze Button */}
+                        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleAnalyze}
+                                disabled={!file || loading}
+                                style={{ fontSize: '1.1rem', padding: '1rem 3rem' }}
+                            >
+                                {loading ? '⏳ Analyzing...' : '🚀 Analyze Document'}
+                            </button>
+                        </div>
+
+                        {/* Loading State */}
+                        {loading && (
+                            <div className="loading">
+                                <div className="spinner"></div>
+                                <div className="loading-text">
+                                    Analyzing regulatory compliance...
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Results */}
+                        {results && !loading && (
+                            <>
+                                {/* Stats */}
+                                <div className="stats-grid">
+                                    <div className="stat-card total">
+                                        <div className="stat-value">{results.total_findings}</div>
+                                        <div className="stat-label">Total Findings</div>
+                                    </div>
+                                    <div className="stat-card high">
+                                        <div className="stat-value">{results.high_priority_count}</div>
+                                        <div className="stat-label">High Priority</div>
+                                    </div>
+                                    <div className="stat-card medium">
+                                        <div className="stat-value">{results.medium_priority_count}</div>
+                                        <div className="stat-label">Medium Priority</div>
+                                    </div>
+                                    <div className="stat-card" style={{ background: 'rgba(139, 92, 246, 0.1)' }}>
+                                        <div className="stat-value" style={{ fontSize: '1.25rem', color: 'var(--accent-purple)' }}>
+                                            {results.regulation_name}
+                                        </div>
+                                        <div className="stat-label">Detected Framework</div>
+                                    </div>
+                                </div>
+
+                                {/* Findings */}
+                                <div className="results-header">
+                                    <h2>📋 Compliance Findings</h2>
+                                    <div className="filters">
+                                        <button
+                                            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+                                            onClick={() => setFilter('all')}
+                                        >
+                                            All ({results.total_findings})
+                                        </button>
+                                        <button
+                                            className={`filter-btn ${filter === 'high' ? 'active' : ''}`}
+                                            onClick={() => setFilter('high')}
+                                        >
+                                            High ({results.high_priority_count})
+                                        </button>
+                                        <button
+                                            className={`filter-btn ${filter === 'medium' ? 'active' : ''}`}
+                                            onClick={() => setFilter('medium')}
+                                        >
+                                            Medium ({results.medium_priority_count})
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {filteredResults.length > 0 ? (
+                                    <div className="findings-list">
+                                        {filteredResults.map((finding, idx) => (
+                                            <div key={idx} className="finding-card">
+                                                <div className="finding-header">
+                                                    <div className="finding-meta">
+                                                        <span className={`badge ${finding.priority.toLowerCase()}`}>
+                                                            {finding.priority}
+                                                        </span>
+                                                        <span className="badge unit">
+                                                            {finding.business_unit}
+                                                        </span>
+                                                        <span className="badge page">
+                                                            Page {finding.page}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="finding-content">
+                                                    {finding.clause}
+                                                </div>
+                                                <div className="finding-footer">
+                                                    <div className="risk-score">
+                                                        <span>Risk Level:</span>
+                                                        <div className="risk-dots">
+                                                            {[1, 2, 3].map(dot => (
+                                                                <div
+                                                                    key={dot}
+                                                                    className={`risk-dot ${dot <= finding.risk_score ? 'filled' : ''}`}
+                                                                />
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                    <div className="confidence">
+                                                        {(finding.confidence * 100).toFixed(1)}% confidence
+                                                        {finding.decision_source === 'ml' && ' (ML)'}
+                                                        {finding.decision_source === 'rule' && ' (Rule)'}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="empty-state">
+                                        <div className="empty-state-icon">🔍</div>
+                                        <p>No findings match the selected filter</p>
+                                    </div>
+                                )}
+                            </>
+                        )}
+
+                        {/* Empty state - no results yet */}
+                        {!results && !loading && (
+                            <div className="empty-state">
+                                <div className="empty-state-icon">📊</div>
+                                <h3 style={{ marginBottom: '0.5rem' }}>No Analysis Yet</h3>
+                                <p>Upload a regulatory document and click "Analyze" to get started</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+{
+  "id": "us_sec_10k",
+  "name": "US SEC Form 10-K",
+  "jurisdiction": "United States",
+  "region": "North America",
+  "regulatory_body": "Securities and Exchange Commission",
+  "language": "en",
+  "description": "Annual financial reporting for publicly traded companies",
+  
+  "document_patterns": [
+    "form 10-k",
+    "annual report pursuant to section",
+    "securities and exchange commission",
+    "commission file number"
+  ],
+  
+  "obligation_keywords": [
+    "must",
+    "shall",
+    "is required to",
+    "are required to",
+    "will be required to",
+    "shall not",
+    "may not",
+    "is obligated to",
+    "are obligated to"
+  ],
+  
+  "business_unit_rules": {
+    "Finance / Accounting": [
+      "financial reporting",
+      "accounting",
+      "disclosure",
+      "financial statement",
+      "gaap",
+      "revenue recognition",
+      "balance sheet",
+      "income statement"
+    ],
+    "Risk Management": [
+      "risk",
+      "liquidity",
+      "capital",
+      "exposure",
+      "market risk",
+      "credit risk",
+      "operational risk"
+    ],
+    "Compliance / Internal Audit": [
+      "compliance",
+      "internal control",
+      "audit",
+      "regulatory",
+      "sarbanes-oxley",
+      "sox",
+      "internal audit"
+    ],
+    "Technology / IT": [
+      "system",
+      "technology",
+      "cyber",
+      "data",
+      "information security",
+      "it infrastructure"
+    ],
+    "Legal": [
+      "legal",
+      "litigation",
+      "intellectual property",
+      "contract",
+      "lawsuit"
+    ]
+  },
+  
+  "risk_scores": {
+    "Risk Management": 3,
+    "Finance / Accounting": 2,
+    "Compliance / Internal Audit": 2,
+    "Technology / IT": 1,
+    "Legal": 2,
+    "Unclassified": 1
+  },
+  
+  "ml_threshold": 0.8
+}

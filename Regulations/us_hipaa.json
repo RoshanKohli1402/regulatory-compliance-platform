@@ -1,0 +1,82 @@
+{
+  "id": "us_hipaa",
+  "name": "US HIPAA",
+  "jurisdiction": "United States",
+  "region": "North America",
+  "regulatory_body": "Department of Health and Human Services",
+  "language": "en",
+  "description": "Health Insurance Portability and Accountability Act - protecting patient health information",
+  
+  "document_patterns": [
+    "hipaa",
+    "health insurance portability",
+    "protected health information",
+    "phi",
+    "covered entity",
+    "business associate"
+  ],
+  
+  "obligation_keywords": [
+    "must",
+    "shall",
+    "is required to",
+    "are required to",
+    "will be required to",
+    "shall not",
+    "may not",
+    "is obligated to"
+  ],
+  
+  "business_unit_rules": {
+    "Privacy": [
+      "protected health information",
+      "phi",
+      "privacy",
+      "patient rights",
+      "minimum necessary",
+      "authorization",
+      "consent"
+    ],
+    "Security": [
+      "security",
+      "safeguards",
+      "administrative safeguards",
+      "physical safeguards",
+      "technical safeguards",
+      "access control",
+      "encryption"
+    ],
+    "Breach Management": [
+      "breach",
+      "notification",
+      "incident response",
+      "breach notification"
+    ],
+    "Compliance": [
+      "compliance",
+      "covered entity",
+      "business associate",
+      "hitech",
+      "audit",
+      "enforcement"
+    ],
+    "IT / Technical": [
+      "electronic protected health information",
+      "ephi",
+      "information system",
+      "technology",
+      "transmission security"
+    ]
+  },
+  
+  "risk_scores": {
+    "Privacy": 3,
+    "Security": 3,
+    "Breach Management": 3,
+    "Compliance": 2,
+    "IT / Technical": 2,
+    "Unclassified": 1
+  },
+  
+  "ml_threshold": 0.8
+}
