@@ -8,6 +8,10 @@ import os
 from pathlib import Path
 from pydantic import BaseModel
 from PyPDF2 import PdfReader
+import pytesseract
+
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
 
 # -----------------------
 # App initialization
