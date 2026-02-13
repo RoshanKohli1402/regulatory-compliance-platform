@@ -7,6 +7,11 @@
   packages = [
     pkgs.python311
     pkgs.python311Packages.pip
+    pkgs.python311Packages.fastapi
+    pkgs.python311Packages.uvicorn
+    pkgs.python311Packages.pypdf2
+    pkgs.python311Packages.python-multipart
+    pkgs.python311Packages.pydantic
 
     # OCR + PDF support
     pkgs.tesseract
@@ -30,7 +35,7 @@
     "ms-python.vscode-pylance"
   ];
 
-  # Enable previews (THIS FIXES THE POPUP)
+  # Enable previews
   idx.previews = {
     enable = true;
     previews = {
@@ -47,14 +52,6 @@
 
   # Workspace lifecycle hooks
   idx.workspace = {
-
-    # Runs once when workspace is created
-    onCreate = {
-      install-deps = ''
-        pip install --upgrade pip
-        pip install -r requirements.txt
-      '';
-    };
 
     # Runs when workspace starts
     onStart = {
