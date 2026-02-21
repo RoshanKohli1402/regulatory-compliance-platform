@@ -6,7 +6,6 @@
   "regulatory_body": "European Data Protection Board",
   "language": "en",
   "description": "Data protection and privacy regulation",
-  
   "document_patterns": [
     "gdpr",
     "general data protection regulation",
@@ -15,7 +14,6 @@
     "data controller",
     "data processor"
   ],
-  
   "obligation_keywords": [
     "must",
     "shall",
@@ -28,7 +26,6 @@
     "are obliged to",
     "have the obligation to"
   ],
-  
   "business_unit_rules": {
     "Data Privacy / Protection": [
       "personal data",
@@ -70,7 +67,6 @@
       "staff"
     ]
   },
-  
   "risk_scores": {
     "Data Privacy / Protection": 3,
     "Legal / Compliance": 3,
@@ -79,6 +75,11 @@
     "HR / Operations": 1,
     "Unclassified": 1
   },
-  
-  "ml_threshold": 0.8
+  "ml_threshold": 0.8,
+  "domains": [
+    "Privacy",
+    "Technology",
+    "Healthcare",
+    "Finance"
+  ]
 }

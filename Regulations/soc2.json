@@ -6,7 +6,6 @@
   "regulatory_body": "AICPA",
   "language": "en",
   "description": "Service organization control for security, availability, processing integrity, confidentiality, and privacy",
-  
   "document_patterns": [
     "soc 2",
     "trust services criteria",
@@ -14,7 +13,6 @@
     "service organization control",
     "type ii"
   ],
-  
   "obligation_keywords": [
     "must",
     "shall",
@@ -26,7 +24,6 @@
     "should",
     "is expected to"
   ],
-  
   "business_unit_rules": {
     "Information Security": [
       "security",
@@ -73,7 +70,6 @@
       "alerting"
     ]
   },
-  
   "risk_scores": {
     "Information Security": 3,
     "Availability": 3,
@@ -83,6 +79,11 @@
     "Monitoring & Logging": 2,
     "Unclassified": 1
   },
-  
-  "ml_threshold": 0.75
+  "ml_threshold": 0.75,
+  "domains": [
+    "Technology",
+    "Finance",
+    "Healthcare",
+    "Government"
+  ]
 }

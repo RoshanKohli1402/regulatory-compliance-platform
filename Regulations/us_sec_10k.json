@@ -6,14 +6,12 @@
   "regulatory_body": "Securities and Exchange Commission",
   "language": "en",
   "description": "Annual financial reporting for publicly traded companies",
-  
   "document_patterns": [
     "form 10-k",
     "annual report pursuant to section",
     "securities and exchange commission",
     "commission file number"
   ],
-  
   "obligation_keywords": [
     "must",
     "shall",
@@ -25,7 +23,6 @@
     "is obligated to",
     "are obligated to"
   ],
-  
   "business_unit_rules": {
     "Finance / Accounting": [
       "financial reporting",
@@ -71,7 +68,6 @@
       "lawsuit"
     ]
   },
-  
   "risk_scores": {
     "Risk Management": 3,
     "Finance / Accounting": 2,
@@ -80,6 +76,10 @@
     "Legal": 2,
     "Unclassified": 1
   },
-  
-  "ml_threshold": 0.8
+  "ml_threshold": 0.8,
+  "domains": [
+    "Finance",
+    "Banking",
+    "Capital Markets"
+  ]
 }

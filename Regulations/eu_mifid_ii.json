@@ -1,0 +1,71 @@
+{
+  "id": "eu_mifid_ii",
+  "name": "EU MiFID II",
+  "jurisdiction": "European Union",
+  "region": "Europe",
+  "regulatory_body": "European Securities and Markets Authority",
+  "language": "en",
+  "description": "Markets in Financial Instruments Directive for investor protection and market transparency",
+  "domains": [
+    "Finance",
+    "Banking",
+    "Capital Markets",
+    "Investment Services"
+  ],
+  "document_patterns": [
+    "mifid ii",
+    "markets in financial instruments directive",
+    "investor protection",
+    "best execution",
+    "transaction reporting"
+  ],
+  "obligation_keywords": [
+    "must",
+    "shall",
+    "is required to",
+    "are required to",
+    "shall not",
+    "may not",
+    "is obligated to"
+  ],
+  "business_unit_rules": {
+    "Trading / Markets": [
+      "best execution",
+      "order handling",
+      "transaction reporting",
+      "market abuse",
+      "pre-trade transparency",
+      "post-trade transparency"
+    ],
+    "Compliance / Legal": [
+      "investor protection",
+      "suitability",
+      "appropriateness",
+      "disclosure",
+      "client communications",
+      "record keeping"
+    ],
+    "Risk Management": [
+      "market risk",
+      "counterparty",
+      "capital requirement",
+      "liquidity",
+      "stress testing"
+    ],
+    "Technology / IT": [
+      "algorithmic trading",
+      "system resilience",
+      "data retention",
+      "monitoring systems",
+      "cyber"
+    ]
+  },
+  "risk_scores": {
+    "Trading / Markets": 3,
+    "Compliance / Legal": 3,
+    "Risk Management": 3,
+    "Technology / IT": 2,
+    "Unclassified": 1
+  },
+  "ml_threshold": 0.8
+}

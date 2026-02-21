@@ -5,7 +5,7 @@ A powerful AI-driven regulatory compliance analysis tool that supports multiple 
 ## ✨ Features
 
 ### 🎯 Core Capabilities
-- **Multi-Jurisdiction Support**: Pre-configured for US SEC 10-K, EU GDPR, SOC 2, HIPAA, and easily extensible
+- **Multi-Jurisdiction Support**: Pre-configured for US SEC 10-K, EU GDPR, SOC 2, HIPAA, Basel III, MiFID II, and easily extensible
 - **Auto-Detection**: Automatically identifies the regulation type from document content
 - **Hybrid Classification**: Combines rule-based and ML approaches for accurate obligation detection
 - **Risk Scoring**: Intelligent risk assessment and prioritization
@@ -17,6 +17,8 @@ A powerful AI-driven regulatory compliance analysis tool that supports multiple 
 2. **EU GDPR** - Data protection and privacy
 3. **SOC 2 Type II** - Service organization controls
 4. **US HIPAA** - Healthcare data protection
+5. **Basel III** - Global banking resilience and liquidity
+6. **EU MiFID II** - Investment services and market transparency
 
 ### 🚀 Easy to Extend
 Adding a new regulation takes just **5 minutes**:
@@ -32,7 +34,7 @@ regulatory-auditor/
 ├── app.py                          # FastAPI backend
 ├── frontend.html                   # React UI
 ├── requirements.txt                # Python dependencies
-├── regulations/                    # Regulation configs
+├── Regulations/                    # Regulation configs (or regulations/)
 │   ├── us_sec_10k.json
 │   ├── eu_gdpr.json
 │   ├── soc2.json
@@ -64,11 +66,11 @@ pip install -r requirements.txt
 
 3. **Create the regulations directory**
 ```bash
-mkdir regulations
+mkdir Regulations
 mkdir models  # Optional, for ML models
 ```
 
-4. **Copy regulation configs** to the `regulations/` folder
+4. **Copy regulation configs** to the `Regulations/` folder
    - us_sec_10k.json
    - eu_gdpr.json
    - soc2.json
@@ -121,6 +123,11 @@ Then visit: `http://localhost:3000/frontend.html`
 curl http://localhost:8000/regulations
 ```
 
+#### List Regulations by Domain (e.g., banking)
+```bash
+curl "http://localhost:8000/regulations?domain=banking"
+```
+
 #### Analyze a Document (Auto-detect)
 ```bash
 curl -X POST http://localhost:8000/analyze \
@@ -160,7 +167,7 @@ curl -X POST "http://localhost:8000/analyze?regulation_id=eu_gdpr" \
 
 ### 1. Create a Configuration File
 
-Create `regulations/your_regulation.json`:
+Create `Regulations/your_regulation.json`:
 
 ```json
 {
@@ -171,6 +178,7 @@ Create `regulations/your_regulation.json`:
   "regulatory_body": "Regulatory Authority",
   "language": "en",
   "description": "Brief description",
+  "domains": ["Finance", "Banking"],
   
   "document_patterns": [
     "keyword1",
@@ -205,11 +213,13 @@ The new regulation will be automatically loaded!
 
 ### 3. Examples
 
-Check the existing configs in the `regulations/` folder:
+Check the existing configs in the `Regulations/` folder:
 - `us_sec_10k.json` - Financial reporting
 - `eu_gdpr.json` - Data privacy
 - `soc2.json` - Security controls
 - `us_hipaa.json` - Healthcare compliance
+- `global_basel_iii.json` - Banking and liquidity controls
+- `eu_mifid_ii.json` - Investment and trading conduct
 
 ## 🎨 UI Features
 
@@ -287,7 +297,7 @@ MIT License - feel free to use and modify!
 ## 🐛 Troubleshooting
 
 ### "Regulations not loading"
-- Ensure the `regulations/` directory exists in the same folder as `app.py`
+- Ensure the `Regulations/` (or `regulations/`) directory exists in the same folder as `app.py`
 - Check JSON syntax in config files
 
 ### "ML models not found"

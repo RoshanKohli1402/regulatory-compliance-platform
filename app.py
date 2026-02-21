@@ -5,12 +5,26 @@ import json
 import re
 import tempfile
 import os
+import shutil
 from pathlib import Path
 from pydantic import BaseModel
 from PyPDF2 import PdfReader
 import pytesseract
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+def configure_tesseract() -> None:
+    """Configure Tesseract path if available on host or via environment variable."""
+    custom_path = os.environ.get("TESSERACT_CMD")
+    if custom_path:
+        pytesseract.pytesseract.tesseract_cmd = custom_path
+        return
+
+    tesseract_path = shutil.which("tesseract")
+    if tesseract_path:
+        pytesseract.pytesseract.tesseract_cmd = tesseract_path
+
+
+configure_tesseract()
 
 
 # -----------------------
@@ -40,6 +54,7 @@ class RegulationInfo(BaseModel):
     jurisdiction: str
     region: str
     regulatory_body: str
+    domains: List[str] = []
     description: str
 
 class AnalysisResult(BaseModel):
@@ -63,18 +78,29 @@ class AnalysisResponse(BaseModel):
 # -----------------------
 # Global regulation loader
 # -----------------------
-REGULATIONS_DIR = Path(__file__).parent / "regulations"
+BASE_DIR = Path(__file__).parent
 REGULATIONS: Dict[str, dict] = {}
+
+
+def get_regulations_dir() -> Path:
+    """Resolve regulations directory regardless of capitalization."""
+    candidates = [BASE_DIR / "regulations", BASE_DIR / "Regulations"]
+    for candidate in candidates:
+        if candidate.exists() and candidate.is_dir():
+            return candidate
+    return candidates[0]
 
 def load_regulations():
     """Load all regulation configurations from the regulations directory"""
     global REGULATIONS
+    REGULATIONS = {}
+    regulations_dir = get_regulations_dir()
     
-    if not REGULATIONS_DIR.exists():
-        print(f"Warning: Regulations directory not found at {REGULATIONS_DIR}")
+    if not regulations_dir.exists():
+        print(f"Warning: Regulations directory not found at {regulations_dir}")
         return
     
-    for reg_file in REGULATIONS_DIR.glob("*.json"):
+    for reg_file in regulations_dir.glob("*.json"):
         if reg_file.name.startswith("_"):
             continue
         try:
@@ -176,8 +202,16 @@ def health_check():
     }
 
 @app.get("/regulations", response_model=List[RegulationInfo])
-def list_regulations():
+def list_regulations(domain: Optional[str] = None):
     """List all available regulation frameworks"""
+    selected_configs = list(REGULATIONS.values())
+    if domain:
+        domain_lower = domain.strip().lower()
+        selected_configs = [
+            config for config in selected_configs
+            if any(domain_lower in d.lower() for d in config.get("domains", []))
+        ]
+
     return [
         RegulationInfo(
             id=config["id"],
@@ -185,9 +219,10 @@ def list_regulations():
             jurisdiction=config["jurisdiction"],
             region=config["region"],
             regulatory_body=config["regulatory_body"],
+            domains=config.get("domains", ["General"]),
             description=config["description"]
         )
-        for config in REGULATIONS.values()
+        for config in selected_configs
     ]
 
 @app.post("/analyze", response_model=AnalysisResponse)
