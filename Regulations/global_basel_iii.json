@@ -1,0 +1,70 @@
+{
+  "id": "global_basel_iii",
+  "name": "Basel III",
+  "jurisdiction": "Global",
+  "region": "Global",
+  "regulatory_body": "Basel Committee on Banking Supervision",
+  "language": "en",
+  "description": "International banking framework for capital adequacy, stress testing, and liquidity risk",
+  "domains": [
+    "Banking",
+    "Finance",
+    "Risk Management",
+    "Treasury"
+  ],
+  "document_patterns": [
+    "basel iii",
+    "basel committee",
+    "common equity tier 1",
+    "capital adequacy",
+    "liquidity coverage ratio",
+    "net stable funding ratio"
+  ],
+  "obligation_keywords": [
+    "must",
+    "shall",
+    "is required to",
+    "are required to",
+    "shall not",
+    "must maintain",
+    "is obligated to"
+  ],
+  "business_unit_rules": {
+    "Treasury / Capital Management": [
+      "capital adequacy",
+      "tier 1",
+      "tier 2",
+      "common equity",
+      "capital buffer"
+    ],
+    "Risk Management": [
+      "stress testing",
+      "credit risk",
+      "market risk",
+      "operational risk",
+      "risk-weighted assets"
+    ],
+    "Liquidity Management": [
+      "liquidity coverage ratio",
+      "lcr",
+      "net stable funding ratio",
+      "nsfr",
+      "high-quality liquid assets"
+    ],
+    "Compliance / Internal Audit": [
+      "regulatory reporting",
+      "prudential",
+      "supervisory review",
+      "disclosure",
+      "internal controls"
+    ]
+  },
+  "risk_scores": {
+    "Treasury / Capital Management": 3,
+    "Risk Management": 3,
+    "Liquidity Management": 3,
+    "Compliance / Internal Audit": 2,
+    "Unclassified": 1
+  },
+  "ml_threshold": 0.8
+}

@@ -6,7 +6,6 @@
   "regulatory_body": "Department of Health and Human Services",
   "language": "en",
   "description": "Health Insurance Portability and Accountability Act - protecting patient health information",
-  
   "document_patterns": [
     "hipaa",
     "health insurance portability",
@@ -15,7 +14,6 @@
     "covered entity",
     "business associate"
   ],
-  
   "obligation_keywords": [
     "must",
     "shall",
@@ -26,7 +24,6 @@
     "may not",
     "is obligated to"
   ],
-  
   "business_unit_rules": {
     "Privacy": [
       "protected health information",
@@ -68,7 +65,6 @@
       "transmission security"
     ]
   },
-  
   "risk_scores": {
     "Privacy": 3,
     "Security": 3,
@@ -77,6 +73,9 @@
     "IT / Technical": 2,
     "Unclassified": 1
   },
-  
-  "ml_threshold": 0.8
+  "ml_threshold": 0.8,
+  "domains": [
+    "Healthcare",
+    "Insurance"
+  ]
 }
